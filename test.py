@@ -96,11 +96,18 @@ def semilogy(x_vals, y_vals, x_label, y_label, x2_vals=None, y2_vals=None,
         d2l.plt.legend(legend)
 
 
+#
+# #3.13丢弃法
+# a = torch.tensor([-1,-0.5,-0.8,0,0.2,0.5,1])
+# print(a)
+# b = a.relu()
+# print(b)
 
-#3.13丢弃法
-a = torch.tensor([-1,-0.5,-0.8,0,0.2,0.5,1])
-print(a)
-b = a.relu()
-print(b)
+
+
+
+
+
+
 
 print("*"*30)
