@@ -47,8 +47,11 @@ train_iter = torch.utils.data.DataLoader(mnist_train, batch_size=batch_size, shu
 test_iter = torch.utils.data.DataLoader(mnist_test, batch_size=batch_size, shuffle=False, num_workers=num_workers)
 
 time_start = time.time()
+i = 0
 for X, y in train_iter:
+    i += 1
     continue
+print(i)
 print('%.2f sec' % (time.time() - time_start))
 
 

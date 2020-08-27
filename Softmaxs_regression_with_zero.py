@@ -1,7 +1,7 @@
 # 本书链接https://tangshusen.me/Dive-into-DL-PyTorch/#/chapter03_DL-basics/3.6_softmax-regression-scratch
 # 3.6节
-#注释：黄文俊
-#邮箱：hurri_cane@qq.com
+# 注释：黄文俊
+# E-mail：hurri_cane@qq.com
 from _ast import Global
 
 import torch
@@ -74,6 +74,7 @@ def train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size,
     times_sum = 0
     for epoch in range(num_epochs):
         train_l_sum, train_acc_sum, n = 0.0, 0.0, 0
+
         for X, y in train_iter:
             #X的size为[256, 1, 28, 28];y的size为[256]
             # print(y.size())
@@ -103,6 +104,7 @@ def train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size,
             train_l_sum += l.item()
             train_acc_sum += (y_hat.argmax(dim=1) == y).sum().item()
             n += y.shape[0]
+
         test_acc = evaluate_accuracy(test_iter, net)
         print('epoch %d, loss %.4f, train acc %.3f, test acc %.3f'
               % (epoch + 1, train_l_sum / n, train_acc_sum / n, test_acc))

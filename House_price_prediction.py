@@ -1,6 +1,6 @@
 # 本书链接https://tangshusen.me/Dive-into-DL-PyTorch/#/chapter03_DL-basics/3.8_mlp
 # 3.16 实战Kaggle比赛：房价预测
-#注释：黄文俊
+# 注释：黄文俊
 #E-mail：hurri_cane@qq.com
 
 from matplotlib import pyplot as plt

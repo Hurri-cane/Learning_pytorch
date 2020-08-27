@@ -1,7 +1,7 @@
 # 本书链接https://tangshusen.me/Dive-into-DL-PyTorch/#/chapter03_DL-basics/3.8_mlp
 # 3.9节
-#注释：黄文俊
-#邮箱：hurri_cane@qq.com
+# 注释：黄文俊
+# E-mail：hurri_cane@qq.com
 import torch
 import numpy as np
 import sys

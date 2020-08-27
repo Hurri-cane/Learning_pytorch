@@ -1,7 +1,7 @@
 # 本书链接https://tangshusen.me/Dive-into-DL-PyTorch/#/chapter03_DL-basics/3.8_mlp
 # 3.11 模型选择、欠拟合和过拟合
-#注释：黄文俊
-#邮箱：hurri_cane@qq.com
+# 注释：黄文俊
+# E-mail：hurri_cane@qq.com
 
 from matplotlib import pyplot as plt
 import torch

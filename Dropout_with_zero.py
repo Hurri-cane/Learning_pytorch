@@ -1,7 +1,7 @@
 # 本书链接https://tangshusen.me/Dive-into-DL-PyTorch/#/chapter03_DL-basics/3.12_weight-decay?id=_3123-%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e5%ae%9e%e7%8e%b0
 # 3.13 丢弃法
-#注释：黄文俊
-#邮箱：hurri_cane@qq.com
+# 注释：黄文俊
+# E-mail：hurri_cane@qq.com
 import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn

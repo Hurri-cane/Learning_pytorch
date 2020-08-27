@@ -9,6 +9,8 @@ sys.path.append("..")
 import d2lzh_pytorch as d2l
 import torch.utils.data as Data
 from torch.nn import init
+from mpl_toolkits import mplot3d
+
 
 def cross_entropy(y_hat, y):
     return - torch.log(y_hat.gather(1, y.view(-1, 1)))
@@ -103,9 +105,88 @@ def semilogy(x_vals, y_vals, x_label, y_label, x2_vals=None, y2_vals=None,
 # b = a.relu()
 # print(b)
 
+#
+# X, W_xh = torch.randn(3, 1), torch.randn(1, 4)
+# H, W_hh = torch.randn(3, 4), torch.randn(4, 4)
+# ans1 = torch.matmul(X, W_xh) + torch.matmul(H, W_hh)
+# print(ans1)
+#
+# ans2 = torch.matmul(torch.cat((X, H), dim=1), torch.cat((W_xh, W_hh), dim=0))
+# print(ans2)
 
 
 
+# 7.1 优化与深度学习
+#
+# def f(x):
+#     return x * np.cos(np.pi * x)
+#
+# d2l.set_figsize((4.5, 2.5))
+# x = np.arange(-1.0, 2.0, 0.1)
+# fig1,  = d2l.plt.plot(x, f(x))
+# fig1.axes.annotate('local minimum', xy=(-0.3, -0.25), xytext=(-0.77, -1.0),
+#                   arrowprops=dict(arrowstyle='->'))
+# fig1.axes.annotate('global minimum', xy=(1.1, -0.95), xytext=(0.6, 0.8),
+#                   arrowprops=dict(arrowstyle='->'))
+# '''
+# matplotlib.pyplot.annotate(s, xy, *args, **kwargs)
+# s：标注文本。
+# xy：要标注的点，一个元组(x,y)。
+# xytext：可选的，文本的位置，一个元组(x,y)。如果没有设置，默认为要标注的点的坐标。
+# xycoords：可选的，点的坐标系。字符串、Artist、Transform、callable或元组。
+# '''
+#
+# d2l.plt.xlabel('x')
+# d2l.plt.ylabel('f(x)')
+
+# # 鞍点
+# x = np.arange(-2.0, 2.0, 0.1)
+# fig2, = d2l.plt.plot(x, x**3)
+# fig2.axes.annotate('saddle point', xy=(0, -0.2), xytext=(-0.52, -5.0),
+#                   arrowprops=dict(arrowstyle='->'))
+# d2l.plt.xlabel('x')
+# d2l.plt.ylabel('f(x)')
+#
+#
+#
+# x, y = np.mgrid[-1: 1: 31j, -1: 1: 31j]
+# # 生成一个网格，网格有两个维度，值域均是从-1到1，平均分为31份
+# # 所以x,y的形状均为31*31
+# # 并且值得一提的是：因为x在前y在后，所以X是纵向分布从-1到1；y是横向分布从-1到1
+# z = x**2 - y**2
+#
+# ax = d2l.plt.figure().add_subplot(111, projection='3d')
+# ax.plot_wireframe(x, y, z, **{'rstride': 2, 'cstride': 2})
+# ax.plot([0], [0], [0], 'rx')
+# ticks = [-1,  0, 1]
+# d2l.plt.xticks(ticks)
+# d2l.plt.yticks(ticks)
+# ax.set_zticks(ticks)
+# d2l.plt.xlabel('x')
+# d2l.plt.ylabel('y')
+#
+# plt.show()
+
+
+# 7.4 动量法
+
+eta = 0.4 # 学习率
+
+def f_2d(x1, x2):
+    return 0.1 * x1 ** 2 + 2 * x2 ** 2
+
+def gd_2d(x1, x2, s1, s2):
+    return (x1 - eta * 0.2 * x1, x2 - eta * 4 * x2, 0, 0)
+
+d2l.show_trace_2d(f_2d, d2l.train_2d(gd_2d))
+
+
+# 我们试着将学习率调得稍大一点，此时自变量在竖直方向不断越过最优解并逐渐发散。
+eta = 0.6
+d2l.show_trace_2d(f_2d, d2l.train_2d(gd_2d))
+
+
+plt.show()
 
 
 
