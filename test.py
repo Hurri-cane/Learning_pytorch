@@ -10,6 +10,7 @@ import d2lzh_pytorch as d2l
 import torch.utils.data as Data
 from torch.nn import init
 from mpl_toolkits import mplot3d
+from PIL import Image
 
 
 def cross_entropy(y_hat, y):
@@ -168,27 +169,107 @@ def semilogy(x_vals, y_vals, x_label, y_label, x2_vals=None, y2_vals=None,
 # plt.show()
 
 
-# 7.4 动量法
+# # 7.4 动量法
+#
+# eta = 0.4 # 学习率
+#
+# def f_2d(x1, x2):
+#     return 0.1 * x1 ** 2 + 2 * x2 ** 2
+#
+# def gd_2d(x1, x2, s1, s2):
+#     return (x1 - eta * 0.2 * x1, x2 - eta * 4 * x2, 0, 0)
+#
+# d2l.show_trace_2d(f_2d, d2l.train_2d(gd_2d))
+#
+#
+# # 我们试着将学习率调得稍大一点，此时自变量在竖直方向不断越过最优解并逐渐发散。
+# eta = 0.6
+# d2l.show_trace_2d(f_2d, d2l.train_2d(gd_2d))
+#
+#
+# plt.show()
 
-eta = 0.4 # 学习率
+#
+# # 8.1 命令式和符号式混合编程
+# def add_str():
+#     return '''
+# def add(a, b):
+#     return a + b
+# '''
+#
+# def fancy_func_str():
+#     return '''
+# def fancy_func(a, b, c, d):
+#     e = add(a, b)
+#     f = add(c, d)
+#     g = add(e, f)
+#     return g
+# '''
+#
+# def evoke_str():
+#     return add_str() + fancy_func_str() + '''
+# print(fancy_func(1, 2, 3, 4))
+# '''
+#
+# prog = evoke_str()
+# print(prog)
+# y = compile(prog, '', 'exec')
+# exec(y)
 
-def f_2d(x1, x2):
-    return 0.1 * x1 ** 2 + 2 * x2 ** 2
+# 8.3 自动并行计算
+# 需要有两块GPU下进行
+# assert torch.cuda.device_count() >= 2
+#
+# class Benchmark():  # 本类已保存在d2lzh_pytorch包中方便以后使用
+#     def __init__(self, prefix=None):
+#         self.prefix = prefix + ' ' if prefix else ''
+#
+#     def __enter__(self):
+#         self.start = time.time()
+#
+#     def __exit__(self, *args):
+#         print('%stime: %.4f sec' % (self.prefix, time.time() - self.start))
+# def run(x):
+#     for _ in range(20000):
+#         y = torch.mm(x, x)
+# x_gpu1 = torch.rand(size=(100, 100), device='cuda:0')
+# x_gpu2 = torch.rand(size=(100, 100), device='cuda:1')
+# with Benchmark('Run on GPU1.'):
+#     run(x_gpu1)
+#     torch.cuda.synchronize()
+#
+# with Benchmark('Then run on GPU2.'):
+#     run(x_gpu2)
+#     torch.cuda.synchronize()
+#
+# with Benchmark('Run on both GPU1 and GPU2 in parallel.'):
+#     run(x_gpu1)
+#     run(x_gpu2)
+#     torch.cuda.synchronize()
 
-def gd_2d(x1, x2, s1, s2):
-    return (x1 - eta * 0.2 * x1, x2 - eta * 4 * x2, 0, 0)
-
-d2l.show_trace_2d(f_2d, d2l.train_2d(gd_2d))
 
 
-# 我们试着将学习率调得稍大一点，此时自变量在竖直方向不断越过最优解并逐渐发散。
-eta = 0.6
-d2l.show_trace_2d(f_2d, d2l.train_2d(gd_2d))
+# 9.3 目标检测和边界框
 
-
+d2l.set_figsize()
+img = Image.open('F:/PyCharm/Learning_pytorch/data/img/catdog.jpg')
+d2l.plt.imshow(img) # 加分号只显示图
 plt.show()
+# 手动绘制边界框（bounding box）
 
+# bbox是bounding box的缩写
+dog_bbox, cat_bbox = [60, 45, 378, 516], [400, 112, 655, 493]
 
+def bbox_to_rect(bbox, color):  # 本函数已保存在d2lzh_pytorch中方便以后使用
+    # 将边界框(左上x, 左上y, 右下x, 右下y)格式转换成matplotlib格式：
+    # ((左上x, 左上y), 宽, 高)
+    return d2l.plt.Rectangle(
+        xy=(bbox[0], bbox[1]), width=bbox[2]-bbox[0], height=bbox[3]-bbox[1],
+        fill=False, edgecolor=color, linewidth=2)
 
+fig = d2l.plt.imshow(img)
+fig.axes.add_patch(bbox_to_rect(dog_bbox, 'blue'))
+fig.axes.add_patch(bbox_to_rect(cat_bbox, 'red'))
+plt.show()
 
 print("*"*30)

@@ -1,5 +1,5 @@
-# 本书链接https://tangshusen.me/Dive-into-DL-PyTorch/#/chapter03_DL-basics/3.8_mlp
-# 6.4 循环神经网络的从零开始实现
+# 本书链接https://tangshusen.me/Dive-into-DL-PyTorch/#/
+# 6.4 循环神经网络的修改
 # 注释：黄文俊
 # E-mail：hurri_cane@qq.com
 

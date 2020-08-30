@@ -1,4 +1,4 @@
-# 本书链接https://tangshusen.me/Dive-into-DL-PyTorch/#/chapter03_DL-basics/3.8_mlp
+# 本书链接https://tangshusen.me/Dive-into-DL-PyTorch/#/
 # 5.5 卷积神经网络（LeNet）
 # 注释：黄文俊
 # E-mail：hurri_cane@qq.com
