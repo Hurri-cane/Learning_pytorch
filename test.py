@@ -11,6 +11,8 @@ import torch.utils.data as Data
 from torch.nn import init
 from mpl_toolkits import mplot3d
 from PIL import Image
+import os
+import torchvision
 
 
 def cross_entropy(y_hat, y):
@@ -248,28 +250,46 @@ def semilogy(x_vals, y_vals, x_label, y_label, x2_vals=None, y2_vals=None,
 #     torch.cuda.synchronize()
 
 
+#
+# # 9.3 目标检测和边界框
+#
+# d2l.set_figsize()
+# img = Image.open('F:/PyCharm/Learning_pytorch/data/img/catdog.jpg')
+# d2l.plt.imshow(img) # 加分号只显示图
+# plt.show()
+# # 手动绘制边界框（bounding box）
+#
+# # bbox是bounding box的缩写
+# dog_bbox, cat_bbox = [60, 45, 378, 516], [400, 112, 655, 493]
+#
+# def bbox_to_rect(bbox, color):  # 本函数已保存在d2lzh_pytorch中方便以后使用
+#     # 将边界框(左上x, 左上y, 右下x, 右下y)格式转换成matplotlib格式：
+#     # ((左上x, 左上y), 宽, 高)
+#     return d2l.plt.Rectangle(
+#         xy=(bbox[0], bbox[1]), width=bbox[2]-bbox[0], height=bbox[3]-bbox[1],
+#         fill=False, edgecolor=color, linewidth=2)
+#
+# fig = d2l.plt.imshow(img)
+# fig.axes.add_patch(bbox_to_rect(dog_bbox, 'blue'))
+# fig.axes.add_patch(bbox_to_rect(cat_bbox, 'red'))
+# plt.show()
+#
+# Path1 = 'home'
+# Path2 = 'develop'
+# Path3 = 'code'
+# Path10 = Path1 + Path2 + Path3
+# Path20 = os.path.join(Path1,Path2,Path3)
+# print ('Path10 = ',Path10)
+# print ('Path20 = ',Path20)
 
-# 9.3 目标检测和边界框
 
-d2l.set_figsize()
-img = Image.open('F:/PyCharm/Learning_pytorch/data/img/catdog.jpg')
-d2l.plt.imshow(img) # 加分号只显示图
-plt.show()
-# 手动绘制边界框（bounding box）
+# 9.8.2 Fast R-CNN
 
-# bbox是bounding box的缩写
-dog_bbox, cat_bbox = [60, 45, 378, 516], [400, 112, 655, 493]
+X = torch.arange(16, dtype=torch.float).view(1, 1, 4, 4)
+print(X)
 
-def bbox_to_rect(bbox, color):  # 本函数已保存在d2lzh_pytorch中方便以后使用
-    # 将边界框(左上x, 左上y, 右下x, 右下y)格式转换成matplotlib格式：
-    # ((左上x, 左上y), 宽, 高)
-    return d2l.plt.Rectangle(
-        xy=(bbox[0], bbox[1]), width=bbox[2]-bbox[0], height=bbox[3]-bbox[1],
-        fill=False, edgecolor=color, linewidth=2)
+rois = torch.tensor([[0, 0, 0, 20, 20], [0, 0, 10, 30, 30]], dtype=torch.float)
 
-fig = d2l.plt.imshow(img)
-fig.axes.add_patch(bbox_to_rect(dog_bbox, 'blue'))
-fig.axes.add_patch(bbox_to_rect(cat_bbox, 'red'))
-plt.show()
-
-print("*"*30)
+ans = torchvision.ops.roi_pool(X, rois, output_size=(2, 2), spatial_scale=0.1)
+print(ans)
+print("*"*50)
